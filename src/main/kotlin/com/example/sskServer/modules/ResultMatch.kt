@@ -1,8 +1,15 @@
 package com.example.sskServer.modules
 
-import javax.persistence.Entity
-import javax.persistence.Table
+import javax.persistence.*
 
 @Entity
-@Table(name = "resultmatch")
-class ResultMatch
+data class ResultMatch(
+        @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+        val resultMatchId: Long,
+        val scoreAway: Int,
+        val scoreHome: Int,
+        val resultMatchLogoHome: String,
+        val resultMatchLogoAway: String,
+        val resultMatchNameHome: String,
+        val resultMatchNameAway: String
+)

@@ -1,7 +1,13 @@
 package com.example.sskServer.controllers
 
+import com.example.sskServer.modules.Player
+import com.example.sskServer.modules.Team
 import com.example.sskServer.repositores.*
+import com.sun.net.httpserver.Authenticator
+import com.sun.net.httpserver.Authenticator.Success
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -19,22 +25,33 @@ class NationalTeamsController() {
     @Autowired
     lateinit var teamRepository: TeamRepository
 
-    @GetMapping("/getTeam")
-    fun getTeam() = teamRepository.getTeam()
+    @GetMapping("/team")
+    fun getTeam() = teamRepository.findAll()
 
-    @PostMapping("/setTeam")
-    fun setTeam() = teamRepository.getTeam()
+    @GetMapping("/player")
+    fun getPlayer() = playerRepository.findAll()
 
-    @GetMapping("/getPlayerName")
-    fun getPlayerName(@RequestParam playerName: String) = playerRepository.getPlayerName(playerName)
+    @PostMapping("/team")
+    fun setTeam(@RequestBody team: Team): Team = teamRepository.save(team)
 
-    @GetMapping("/getPlayerPosition")
-    fun getPlayerPosition(@RequestParam playerPosition: String) = playerRepository.getPlayerPosition(playerPosition)
+    @PostMapping("player")
+    fun setPlayer(@RequestBody player: Player) = playerRepository.save(player)
 
-    @GetMapping("/getPlayerPP")
-    fun getPlayerPP(@RequestParam playerPP: String) = playerRepository.getPlayerPP(playerPP)
+    @DeleteMapping("/posts{id}")
+    fun deleteTeamById(@PathVariable(value = "id") teamId: Long): ResponseEntity<Void> {
+        return teamRepository.findById(teamId).map { team ->
+            teamRepository.delete(team)
+            ResponseEntity<Void>(HttpStatus.OK)
+        }.orElse(ResponseEntity.notFound().build())
+    }
+
+    @DeleteMapping("/posts{id}")
+    fun deletePlayerById(@PathVariable(value = "id") playerId: Long): ResponseEntity<Void> {
+        return playerRepository.findById(playerId).map { player ->
+            playerRepository.delete(player)
+            ResponseEntity<Void>(HttpStatus.OK)
+        }.orElse(ResponseEntity.notFound().build())
+    }
 
 
-// we are getting all the players direct or getting name, pp etc individually?
-// when we use repository and when we use service?
 }

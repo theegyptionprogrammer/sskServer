@@ -1,8 +1,11 @@
 package com.example.sskServer.modules
 
-import javax.persistence.Entity
-import javax.persistence.Table
+import javax.persistence.*
 
 @Entity
-@Table(name = "player")
-class Player(val playerName: String, val playerPosition: String, val playerId: Int, val playerPP: String)
+data class Player(
+        @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+        val playerId: Int,
+        val playerName: String,
+        val playerPosition: String,
+        val playerPP: String)

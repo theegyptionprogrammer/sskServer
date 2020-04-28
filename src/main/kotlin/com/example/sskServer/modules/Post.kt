@@ -1,10 +1,12 @@
 package com.example.sskServer.modules
 
-import javax.persistence.Entity
-import javax.persistence.Table
+import javax.persistence.*
 
 
 @Entity
-@Table(name = "post")
-open class Post(val postId: Int, val postText: String, val postPicture: String)
+data class Post(
+        @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+        val postId: Long,
+        val postText: String,
+        val postPicture: String)
 
