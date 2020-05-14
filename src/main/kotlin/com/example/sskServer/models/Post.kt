@@ -1,4 +1,4 @@
-package com.example.sskServer.modules
+package com.example.sskServer.models
 
 import javax.persistence.*
 

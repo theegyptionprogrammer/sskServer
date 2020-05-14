@@ -24,7 +24,15 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:2.0.5.RELEASE")
+	implementation("io.springfox:springfox-swagger2:2.9.2")
+	implementation("io.springfox:springfox-swagger-ui:2.9.2")
+	implementation("javax.xml.bind:jaxb-api:2.4.0-b180830.0359")
 
+	compileOnly("org.projectlombok:lombok:1.18.12")
+	annotationProcessor("org.projectlombok:lombok:1.18.12")
+
+	testCompileOnly("org.projectlombok:lombok:1.18.12")
+	testAnnotationProcessor("org.projectlombok:lombok:1.18.12")
 
 	runtimeOnly("org.postgresql:postgresql")
 	testImplementation("org.springframework.boot:spring-boot-starter-test") {
@@ -42,3 +50,4 @@ tasks.withType<KotlinCompile> {
 		jvmTarget = "1.8"
 	}
 }
+

@@ -1,4 +1,4 @@
-package com.example.sskServer.modules
+package com.example.sskServer.models
 
 import javax.persistence.*
 
@@ -14,7 +14,5 @@ data class NationalTeam(
         @Column(name = "nationalTeamVkLink")
         val nationalTeamVkLink: Char,
         @Column(name = "nationalTeamInstaLink")
-        val nationalTeamInstaLink: Char,
-        val listMatches: List<Match>,
-        val listResultMatches: List<ResultMatch>,
-        val listPlayer: List<Player>)
+        val nationalTeamInstaLink: Char
+)
