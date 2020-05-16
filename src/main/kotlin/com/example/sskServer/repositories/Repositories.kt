@@ -4,15 +4,20 @@ import com.example.sskServer.models.*
 import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository
 
-
 @Repository
 interface PlayerRepository : CrudRepository<Player, Long> {
-    //   fun searchPlayerByName(text: String): Optional<Player>
-//    fun searchPlayerByID(id: Long): Optional<Player>
+    //   fun searchPlayerByID(playerID: Long): Optional<Iterator<Player>>
+    // fun searchPlayerByName(playerName: String): Optional<Iterator<List<Player>>>
 }
 
 @Repository
 interface PostRepository : CrudRepository<Post, Any>
+
+@Repository
+interface NationalPlayerRepository : CrudRepository<NationalPlayer, Any>
+
+@Repository
+interface OrganizerRepository : CrudRepository<Organizer, Any>
 
 @Repository
 interface ResultMatchRepository : CrudRepository<ResultMatch, Any>

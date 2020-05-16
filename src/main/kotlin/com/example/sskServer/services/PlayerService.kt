@@ -1,6 +1,7 @@
 package com.example.sskServer.services
 
 import com.example.sskServer.models.Player
+import java.util.*
 
 
 interface PlayerService {
@@ -9,6 +10,6 @@ interface PlayerService {
     fun deletePlayer(player: Player)
     fun updatePlayer(player: Player): Player
     fun getAllPlayers(): MutableIterable<Player>
-    //  fun getPlayerById(id: Long):Optional<Player>
-    //  fun getPlayerByName(name: String):Optional<Player>
+    fun searchPlayerById(id: Long): Optional<Player>
+    // fun getPlayerByName(name: String):Optional<Iterator<List<Player>>>
 }

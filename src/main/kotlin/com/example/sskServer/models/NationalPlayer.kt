@@ -5,25 +5,29 @@ import lombok.Data
 import lombok.NoArgsConstructor
 import javax.persistence.*
 
+
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name = "Player")
-data class Player(
+@Table(name = "nationalPlayer")
+class NationalPlayer(
         @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
         @Column(name = "ID")
         @ApiModelProperty(position = 1)
-        val playerId: Int,
+        val nationalPlayerId: Int,
         @Column(name = "name")
         @ApiModelProperty(position = 2)
-        val playerName: String,
+        val nationalPlayerName: String,
         @Column(name = "position")
         @ApiModelProperty(position = 3)
-        val playerPosition: String,
-        @Column(name = "profile picture")
+        val nationalPlayerPosition: String,
+        @Column(name = "profilePicture")
         @ApiModelProperty(position = 4)
-        val playerPP: String,
-        @Column(name = "contact")
+        val nationalPlayerPP: String,
+        @Column(name = "link")
+        @ApiModelProperty(position = 5)
+        val nationalPlayerLink: Long,
+        @Column(name = "achievements")
         @ApiModelProperty(position = 6)
-        val playerContact: Long
+        val nationalPlayerAchievement: String
 )

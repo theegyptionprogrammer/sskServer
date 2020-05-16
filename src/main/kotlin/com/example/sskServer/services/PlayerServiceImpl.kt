@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.util.*
 
 
 @Service
@@ -40,18 +41,14 @@ class PlayerServiceImpl : PlayerService {
         return playerRepository.findAll()
     }
 
-/*
+
     @Transactional
-    override fun getPlayerById(id: Long): Optional<Player> {
-        return playerRepository.searchPlayerByID(id)
+    override fun searchPlayerById(id: Long): Optional<Player> {
+        return playerRepository.findById(id)
     }
-*/
-
-
-/*    @Transactional
-    override fun getPlayerByName(name: String): Optional<Player> {
+/*
+    override fun getPlayerByName(name: String): Optional<Iterator<List<Player>>> {
         return playerRepository.searchPlayerByName(name)
     }
-
- */
+*/
 }
