@@ -37,10 +37,10 @@ class OrganizerServiceImpl : OrganizerService {
 
     @Transactional
     override fun findOrganizerByInstitute(institute: String): Optional<Organizer> {
-        return organizerRepository.findOrganizerByInstitute(institute)
+        return organizerRepository.findByInstitute(institute)
     }
 
     override fun findOrganizerByName(name: String): Optional<Organizer> {
-        return organizerRepository.findOrganizerByName(name)
+        return organizerRepository.findByName(name)
     }
 }

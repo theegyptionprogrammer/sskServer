@@ -1,3 +1,4 @@
+
 package com.example.sskServer.controllers
 
 import com.example.sskServer.models.NationalPlayer
@@ -48,7 +49,7 @@ class NationalPlayerController {
 
     @PostMapping("/nationalPlayer/search/{id}")
     @ApiOperation(value = "search a nationalPlayer", response = NationalPlayer::class)
-    fun findNationalPlayerById(@RequestParam(name = "nationalPlayerId") nationalPlayerId: Long): ResponseEntity<*>? {
+    fun findById(@RequestParam(name = "nationalPlayerId") nationalPlayerId: Long): ResponseEntity<*>? {
         return try {
             val nationalPlayer = nationalPlayerService.findNationalPlayerById(nationalPlayerId)
             if (nationalPlayer.isPresent) {
@@ -70,3 +71,4 @@ class NationalPlayerController {
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     fun noPostFoundResponseID(id: Long) = ResponseEntity("No national player found with id: $id", HttpStatus.NOT_FOUND)
 }
+

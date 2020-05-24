@@ -19,13 +19,14 @@ import javax.validation.Valid
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/news")
 class NewsController {
 
     @Autowired
     lateinit var postService: PostService
+
     @Autowired
     lateinit var nationalPlayerService: NationalPlayerService
+
     @Autowired
     lateinit var organizerService: OrganizerService
 
@@ -41,28 +42,44 @@ class NewsController {
 
     @PostMapping("/post/{id}")
     @ApiOperation(value = "find a post by id", response = Post::class)
-    fun findPostById(@RequestParam(name = "postId") postId: String): ResponseEntity<*>? {
+    fun findPostById(@RequestParam(name = "postId") postId: Long): ResponseEntity<*>? {
         return try {
-            val post = postService.findPostById(postId)
+            val post = postService.findById(postId)
             if (post.isPresent) {
-                ResponseEntity(postService.findPostById(postId), HttpStatus.OK)
+                ResponseEntity(post.get(), HttpStatus.OK)
             } else {
-                noPostFoundResponseID(postId)
+                noObjectFoundResponseID(postId)
             }
         } catch (e: IllegalArgumentException) {
             handleError(e)
         }
     }
 
+    @PostMapping("/post/{hashTag}")
+    @ApiOperation(value = "find post by hashTag", response = Post::class)
+    fun findPostByHashTag(@RequestParam(name = "hashTag") hashTag: Char): ResponseEntity<*>? {
+        return try {
+            val post = postService.findByHashTag(hashTag)
+            if (post.isPresent) {
+                ResponseEntity(post.get(), HttpStatus.OK)
+            } else {
+                noObjectFoundResponseChar(hashTag)
+            }
+        } catch (e: IllegalArgumentException) {
+            handleError(e)
+        }
+    }
+
+
     @GetMapping("post/{text}")
     @ApiOperation(value = "find post by text", response = Post::class)
     fun findPostByText(@RequestParam(name = "postText") postText: String): ResponseEntity<*>? {
         return try {
-            val post: Optional<Post> = postService.findPostByText(postText)
+            val post: Optional<Post> = postService.searchPostByText(postText)
             if (post.isPresent) {
                 ResponseEntity(post.get(), HttpStatus.OK)
             } else {
-                noPostFoundResponseText(postText)
+                noObjectFoundResponseText(postText)
             }
         } catch (e: IllegalArgumentException) {
             handleError(e)
@@ -73,11 +90,11 @@ class NewsController {
     @ApiOperation(value = "find post by time publishing", response = Post::class)
     fun findPostByTimePublishing(@RequestParam(name = "timePublishing") timePublishing: Long): ResponseEntity<*>? {
         return try {
-            val post: Optional<Post> = postService.findPostByTimePublishing(timePublishing)
+            val post: Optional<Post> = postService.findByTimePublishing(timePublishing)
             if (post.isPresent) {
                 ResponseEntity(post.get(), HttpStatus.OK)
             } else {
-                noPostFoundResponseTimePublishing(timePublishing)
+                noObjectFoundResponseID(timePublishing)
             }
         } catch (e: IllegalArgumentException) {
             handleError(e)
@@ -92,12 +109,13 @@ class NewsController {
             if (nationalPlayer.isPresent) {
                 ResponseEntity(nationalPlayer.get(), HttpStatus.OK)
             } else {
-                noPlayerFoundResponseName(name)
+                noObjectFoundResponseText(name)
             }
         } catch (e: IllegalArgumentException) {
             handleError(e)
         }
     }
+
 
     @PostMapping("/player/{institute}")
     @ApiOperation(value = "find player by institute", response = Player::class)
@@ -107,7 +125,7 @@ class NewsController {
             if (organizer.isPresent) {
                 ResponseEntity(organizer.get(), HttpStatus.OK)
             } else {
-                noOrganizerFoundResponseInstitute(institute)
+                noObjectFoundResponseText(institute)
             }
         } catch (e: IllegalArgumentException) {
             handleError(e)
@@ -122,7 +140,7 @@ class NewsController {
             if (organizer.isPresent) {
                 ResponseEntity(organizer.get(), HttpStatus.OK)
             } else {
-                noOrganizerFoundResponseName(name)
+                noObjectFoundResponseText(name)
             }
         } catch (e: IllegalArgumentException) {
             handleError(e)
@@ -137,7 +155,7 @@ class NewsController {
             if (organizer.isPresent) {
                 ResponseEntity(organizer.get(), HttpStatus.OK)
             } else {
-                noOrganizerFoundResponseInstitute(institute)
+                noObjectFoundResponseText(institute)
             }
         } catch (e: IllegalArgumentException) {
             handleError(e)
@@ -156,12 +174,12 @@ class NewsController {
 
     @PostMapping("/update/{id}")
     @ApiOperation(value = "update an existing post", response = Post::class)
-    fun updatePost(@RequestParam(name = "postId") postId: String, @Valid @RequestBody newPost: Post): ResponseEntity<*>? {
+    fun updatePost(@RequestParam(name = "postId") postId: Long, @Valid @RequestBody newPost: Post): ResponseEntity<*>? {
         return try {
-            return postService.findPostById(postId).map { existingPost ->
+            return postService.findById(postId).map { existingPost ->
                 val updatedPost: Post = existingPost
-                        .copy(postId = newPost.postId, postText = newPost.postText, postPicture = newPost.postPicture,
-                                postTitle = newPost.postTitle, postTimePublish = newPost.postTimePublish)
+                        .copy(id = newPost.id, text = newPost.text, picture = newPost.picture,
+                                title = newPost.title)
                 ResponseEntity.ok().body(postService.savePost(updatedPost))
             }.orElse(ResponseEntity.notFound().build())
         } catch (e: IllegalArgumentException) {
@@ -187,25 +205,15 @@ class NewsController {
 
     @ExceptionHandler(IllegalArgumentException::class)
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
-    fun noPostFoundResponseID(id: String) = ResponseEntity("No post found with id: $id", HttpStatus.NOT_FOUND)
+    fun noObjectFoundResponseID(id: Long) = ResponseEntity("No post found with id: $id", HttpStatus.NOT_FOUND)
 
     @ExceptionHandler(IllegalArgumentException::class)
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
-    fun noPostFoundResponseText(text: String) = ResponseEntity("No post found with text: $text", HttpStatus.NOT_FOUND)
+    fun noObjectFoundResponseText(text: String) = ResponseEntity("No post found with text: $text", HttpStatus.NOT_FOUND)
 
     @ExceptionHandler(IllegalArgumentException::class)
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
-    fun noPostFoundResponseTimePublishing(timePublishing: Long) = ResponseEntity("No post found with timePublishing: $timePublishing", HttpStatus.NOT_FOUND)
+    fun noObjectFoundResponseChar(hashTag: Char) = ResponseEntity("No post found with text: $hashTag", HttpStatus.NOT_FOUND)
 
-    @ExceptionHandler(IllegalArgumentException::class)
-    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
-    fun noPlayerFoundResponseName(name: String) = ResponseEntity("No player found with name: $name", HttpStatus.NOT_FOUND)
 
-    @ExceptionHandler(IllegalArgumentException::class)
-    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
-    fun noOrganizerFoundResponseName(name: String) = ResponseEntity("No player found with name: $name", HttpStatus.NOT_FOUND)
-
-    @ExceptionHandler(IllegalArgumentException::class)
-    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
-    fun noOrganizerFoundResponseInstitute(institute: String) = ResponseEntity("No player found with name: $institute", HttpStatus.NOT_FOUND)
 }

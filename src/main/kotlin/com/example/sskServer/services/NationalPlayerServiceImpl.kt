@@ -1,5 +1,6 @@
 package com.example.sskServer.services
 
+
 import com.example.sskServer.models.NationalPlayer
 import com.example.sskServer.repositories.NationalPlayerRepository
 import lombok.RequiredArgsConstructor
@@ -37,6 +38,7 @@ class NationalPlayerServiceImpl : NationalPlayerService {
 
     @Transactional
     override fun findNationalPlayerByName(name: String): Optional<NationalPlayer> {
-        return nationalPlayerRepository.findNationalPlayerByName(name)
+        return nationalPlayerRepository.findByName(name)
     }
 }
+

@@ -1,6 +1,6 @@
 package com.example.sskServer.services
 
-import com.example.sskServer.models.Post
+import  com.example.sskServer.models.Post
 import com.example.sskServer.repositories.PostRepository
 import lombok.NoArgsConstructor
 import org.springframework.beans.factory.annotation.Autowired
@@ -31,16 +31,23 @@ class PostServiceImpl : PostService {
     }
 
     @Transactional
-    override fun findPostById(id: String): Optional<Post> {
+    override fun findById(id: Long): Optional<Post> {
         return postRepository.findById(id)
     }
 
-    override fun findPostByText(text: String): Optional<Post> {
-        return postRepository.findPostByText(text)
+    @Transactional
+    override fun searchPostByText(text: String): Optional<Post> {
+        return postRepository.findByText(text)
     }
 
-    override fun findPostByTimePublishing(timePublishing: Long): Optional<Post> {
-        return postRepository.findPostByTimePublishing(timePublishing)
+    @Transactional
+    override fun findByTimePublishing(timePublishing: Long): Optional<Post> {
+        return postRepository.findByTimePublishing(timePublishing)
+    }
+
+    @Transactional
+    override fun findByHashTag(hashTag: Char): Optional<Post> {
+        return postRepository.findByHashTag(hashTag)
     }
 
     @Transactional

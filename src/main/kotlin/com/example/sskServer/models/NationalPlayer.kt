@@ -12,25 +12,25 @@ import javax.persistence.*
 @Table(name = "nationalPlayer")
 class NationalPlayer(
         @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-        @Column(name = "ID")
+        @Column(name = "id")
         @ApiModelProperty(position = 1)
-        val nationalPlayerId: Int,
+        val id: Int,
         @Column(name = "name")
         @ApiModelProperty(position = 2)
-        val nationalPlayerName: String,
+        val name: String,
         @Column(name = "position")
         @ApiModelProperty(position = 3)
-        val nationalPlayerPosition: String,
+        val position: String,
         @Column(name = "profilePicture")
         @ApiModelProperty(position = 4)
-        val nationalPlayerPP: String,
+        val profilePicture: String,
         @Column(name = "link")
         @ApiModelProperty(position = 5)
-        val nationalPlayerLink: Long,
+        val link: Long,
         @Column(name = "achievements")
         @ApiModelProperty(position = 6)
-        val nationalPlayerAchievement: String,
+        val achievement: String,
         @Column(name = "institute")
         @ApiModelProperty(position = 7)
-        val nationalPlayerInstitute: String
+        val institute: String
 )

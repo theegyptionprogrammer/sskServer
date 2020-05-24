@@ -13,17 +13,21 @@ import javax.persistence.*
 data class Post(
         @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
         @ApiModelProperty(position = 1)
-        val postId: Long,
-        @Column(name = "postTitle")
+        val id: Long,
+        @Column(name = "title")
         @ApiModelProperty(position = 2)
-        val postTitle: String,
-        @Column(name = "postText")
+        val title: String,
+        @Column(name = "text")
         @ApiModelProperty(position = 3)
-        val postText: String,
-        @Column(name = "postPicture")
+        val text: String,
+        @Column(name = "picture")
         @ApiModelProperty(position = 4)
-        val postPicture: String,
-        @Column(name = "postTimePublish")
+        val picture: String,
+        @Column(name = "timePublishing")
         @ApiModelProperty(position = 5)
-        val postTimePublish: Long)
+        val timePublishing: Long,
+        @Column(name = "hashTag")
+        @ApiModelProperty(position = 6)
+        val hashTag: Char
+)
 

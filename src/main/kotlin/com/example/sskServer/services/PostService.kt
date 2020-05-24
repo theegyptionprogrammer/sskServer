@@ -7,8 +7,9 @@ interface PostService {
     fun savePost(post: Post): Post
     fun saveListPosts(postList: List<Post>): MutableIterable<Post>
     fun getAllPosts(): MutableIterable<Post>
-    fun findPostById(id: String): Optional<Post>
-    fun findPostByText(text: String): Optional<Post>
-    fun findPostByTimePublishing(timePublishing: Long): Optional<Post>
+    fun findById(id: Long): Optional<Post>
+    fun findByTimePublishing(timePublishing: Long): Optional<Post>
+    fun findByHashTag(hashTag: Char): Optional<Post>
+    fun searchPostByText(text: String): Optional<Post>
     fun deletePost(post: Post)
 }

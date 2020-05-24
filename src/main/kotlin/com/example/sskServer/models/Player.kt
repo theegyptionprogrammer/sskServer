@@ -13,20 +13,20 @@ data class Player(
         @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
         @Column(name = "id")
         @ApiModelProperty(position = 1)
-        val playerId: Int,
-        @Column(name = "playerName")
+        val id: Int,
+        @Column(name = "name")
         @ApiModelProperty(position = 2)
-        val playerName: String,
+        val name: String,
         @Column(name = "position")
         @ApiModelProperty(position = 3)
-        val playerPosition: String,
+        val position: String,
         @Column(name = "profilePicture")
         @ApiModelProperty(position = 4)
-        val playerPP: String,
+        val profilePicture: String,
         @Column(name = "contact")
         @ApiModelProperty(position = 6)
-        val playerContact: Long,
+        val contact: Long,
         @Column(name = "institute")
         @ApiModelProperty(position = 7)
-        val playerInstitute: String
+        val institute: String
 )

@@ -37,7 +37,7 @@ class OrganizerController {
     }
 
     @PostMapping("/organizer/delete")
-    @ApiOperation(value = "delete a new organizer", response = Organizer::class)
+    @ApiOperation(value = "delete an organizer", response = Organizer::class)
     fun deleteOrganizer(@RequestBody organizer: Organizer): ResponseEntity<*>? {
         return try {
             ResponseEntity(organizerService.deleteOrganizer(organizer), HttpStatus.OK)
@@ -47,8 +47,8 @@ class OrganizerController {
     }
 
     @PostMapping("/organizer/search/{id}")
-    @ApiOperation(value = "search a organizer", response = Organizer::class)
-    fun findOrganizerById(@RequestParam(name = "organizerId") organizerId: Long): ResponseEntity<*>? {
+    @ApiOperation(value = "find an organizer", response = Organizer::class)
+    fun findById(@RequestParam(name = "organizerId") organizerId: Long): ResponseEntity<*>? {
         return try {
             val organizer = organizerService.findOrganizerById(organizerId)
             if (organizer.isPresent) {
@@ -61,6 +61,22 @@ class OrganizerController {
         }
     }
 
+    @PostMapping("/organizer/search/{id}")
+    @ApiOperation(value = "find an organizer", response = Organizer::class)
+    fun findByName(@RequestParam(name = "organizerName") organizerName: String): ResponseEntity<*>? {
+        return try {
+            val organizer = organizerService.findOrganizerByName(organizerName)
+            if (organizer.isPresent) {
+                ResponseEntity(organizerService.findOrganizerByName(organizerName), HttpStatus.OK)
+            } else {
+                noPostFoundResponseName(organizerName)
+            }
+        } catch (e: IllegalArgumentException) {
+            handleError(e)
+        }
+    }
+
+
     @ExceptionHandler(IllegalArgumentException::class)
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     fun handleError(e: IllegalArgumentException) = ResponseEntity("Try server later", HttpStatus.INTERNAL_SERVER_ERROR)
@@ -68,4 +84,8 @@ class OrganizerController {
     @ExceptionHandler(IllegalArgumentException::class)
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     fun noPostFoundResponseID(id: Long) = ResponseEntity("No organizer found with id: $id", HttpStatus.NOT_FOUND)
+
+    @ExceptionHandler(IllegalArgumentException::class)
+    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+    fun noPostFoundResponseName(name: String) = ResponseEntity("No organizer found with id: $name", HttpStatus.NOT_FOUND)
 }

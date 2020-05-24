@@ -59,7 +59,7 @@ class PlayerController {
         }
     }
 
-    @RequestMapping("/{name}", method = [RequestMethod.GET])
+    @RequestMapping("/{name}")
     @ApiOperation(value = "search a player by name", response = Player::class)
     fun findByName(@RequestParam(name = "playerName") playerName: String): ResponseEntity<*>? {
         return try {

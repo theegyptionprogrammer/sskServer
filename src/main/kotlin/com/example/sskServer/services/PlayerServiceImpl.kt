@@ -36,7 +36,6 @@ class PlayerServiceImpl : PlayerService {
         return playerRepository.findAll()
     }
 
-
     @Transactional
     override fun findPlayerById(id: Long): Optional<Player> {
         return playerRepository.findById(id)
@@ -44,7 +43,6 @@ class PlayerServiceImpl : PlayerService {
 
     @Transactional
     override fun findPlayerByName(name: String): Optional<Player> {
-        return playerRepository.findPlayerByName(name)
+        return playerRepository.findByName(name)
     }
-
 }

@@ -8,27 +8,25 @@ import java.util.*
 
 @Repository
 interface PlayerRepository : CrudRepository<Player, Long> {
-    fun findPlayerByName(name: String): Optional<Player>
+    fun findByName(name: String): Optional<Player>
 }
 
 @Repository
-interface PostRepository : CrudRepository<Post, Any> {
-    fun findPostByText(text: String): Optional<Post>
-    fun findPostByTimePublishing(timePublishing: Long): Optional<Post>
+interface PostRepository : CrudRepository<Post, Long> {
+    fun findByText(text: String): Optional<Post>
+    fun findByTimePublishing(timePublishing: Long): Optional<Post>
+    fun findByHashTag(hashTag: Char): Optional<Post>
 }
 
 @Repository
 interface NationalPlayerRepository : CrudRepository<NationalPlayer, Any> {
-    fun findNationalPlayerByName(name: String): Optional<NationalPlayer>
+    fun findByName(name: String): Optional<NationalPlayer>
 }
 
 @Repository
-interface FileRepository : CrudRepository<File, Any>
-
-@Repository
 interface OrganizerRepository : CrudRepository<Organizer, Any> {
-    fun findOrganizerByInstitute(institute: String): Optional<Organizer>
-    fun findOrganizerByName(name: String): Optional<Organizer>
+    fun findByInstitute(institute: String): Optional<Organizer>
+    fun findByName(name: String): Optional<Organizer>
 }
 
 @Repository
@@ -37,8 +35,10 @@ interface ResultMatchRepository : CrudRepository<ResultMatch, Any>
 @Repository
 interface MatchRepository : CrudRepository<Match, Any>
 
+/*
 @Repository
 interface TeamRepository : CrudRepository<NationalTeam, Any>
 
 @Repository
 interface HistoryRepository : CrudRepository<HistoryNT, Any>
+*/

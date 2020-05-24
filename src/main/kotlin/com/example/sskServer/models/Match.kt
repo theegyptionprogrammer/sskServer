@@ -6,17 +6,17 @@ import javax.persistence.*
 @Table(name = "match")
 data class Match(
         @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-        val matchId: Long,
+        val id: Long,
         @Column(name = "matchTime")
-        val matchTime: Long,
+        val time: Long,
         @Column(name = "matchLocation")
-        val matchLocation: String,
+        val location: String,
         @Column(name = "matchLogoHome")
-        val matchLogoHome: String,
+        val logoHome: String,
         @Column(name = "matchLogoAway")
-        val matchLogoAway: String,
+        val logoAway: String,
         @Column(name = "matchNameHome")
-        val matchNameHome: String,
+        val nameHome: String,
         @Column(name = "matchNameAway")
-        val matchNameAway: String
+        val nameAway: String
 )
