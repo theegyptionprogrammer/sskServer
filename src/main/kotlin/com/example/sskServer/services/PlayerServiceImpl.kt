@@ -17,12 +17,12 @@ class PlayerServiceImpl : PlayerService {
     lateinit var playerRepository: PlayerRepository
 
     @Transactional
-    override fun addPlayer(player: Player): Player {
+    override fun savePlayer(player: Player): Player {
         return playerRepository.save(player)
     }
 
     @Transactional
-    override fun addPlayers(listPlayers: List<Player>): MutableIterable<Player> {
+    override fun savePlayers(listPlayers: List<Player>): MutableIterable<Player> {
         return playerRepository.saveAll(listPlayers)
     }
 
@@ -32,23 +32,19 @@ class PlayerServiceImpl : PlayerService {
     }
 
     @Transactional
-    override fun updatePlayer(player: Player): Player {
-        return playerRepository.save(player)
-    }
-
-    @Transactional
     override fun getAllPlayers(): MutableIterable<Player> {
         return playerRepository.findAll()
     }
 
 
     @Transactional
-    override fun searchPlayerById(id: Long): Optional<Player> {
+    override fun findPlayerById(id: Long): Optional<Player> {
         return playerRepository.findById(id)
     }
-/*
-    override fun getPlayerByName(name: String): Optional<Iterator<List<Player>>> {
-        return playerRepository.searchPlayerByName(name)
+
+    @Transactional
+    override fun findPlayerByName(name: String): Optional<Player> {
+        return playerRepository.findPlayerByName(name)
     }
-*/
+
 }

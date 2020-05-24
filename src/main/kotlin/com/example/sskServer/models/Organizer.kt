@@ -8,13 +8,13 @@ import javax.persistence.*
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name = "Organizer")
+@Table(name = "organizer")
 class Organizer(
         @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
         @Column(name = "id")
         @ApiModelProperty(position = 1)
         val organizerId: Long,
-        @Column(name = "profile picture")
+        @Column(name = "profilePicture")
         @ApiModelProperty(position = 2)
         val organizerPP: String,
         @Column(name = "name")
@@ -28,5 +28,8 @@ class Organizer(
         val organizerLink: String,
         @Column(name = "role")
         @ApiModelProperty(position = 6)
-        val organizerRole: String
+        val organizerRole: String,
+        @Column(name = "institute")
+        @ApiModelProperty(position = 7)
+        val organizerInstitute: String
 )

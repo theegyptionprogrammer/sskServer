@@ -4,9 +4,10 @@ import com.example.sskServer.models.Organizer
 import java.util.*
 
 interface OrganizerService {
-    fun addOrganizer(organizer: Organizer): Organizer
+    fun saveOrganizer(organizer: Organizer): Organizer
     fun getAllOrganizers(): MutableIterable<Organizer>
+    fun findOrganizerById(id: Long): Optional<Organizer>
+    fun findOrganizerByInstitute(institute: String): Optional<Organizer>
+    fun findOrganizerByName(name: String): Optional<Organizer>
     fun deleteOrganizer(organizer: Organizer)
-    fun searchOrganizerById(id: Long): Optional<Organizer>
-    fun updateOrganizer(organizer: Organizer): Organizer
 }

@@ -18,9 +18,9 @@ class OrganizerController {
 
     @PostMapping("/organizer/add")
     @ApiOperation(value = "add a new organizer", response = Organizer::class)
-    fun addOrganizer(@RequestBody organizer: Organizer): ResponseEntity<*>? {
+    fun saveOrganizer(@RequestBody organizer: Organizer): ResponseEntity<*>? {
         return try {
-            ResponseEntity(organizerService.addOrganizer(organizer), HttpStatus.CREATED)
+            ResponseEntity(organizerService.saveOrganizer(organizer), HttpStatus.CREATED)
         } catch (e: IllegalArgumentException) {
             handleError(e)
         }
@@ -48,11 +48,11 @@ class OrganizerController {
 
     @PostMapping("/organizer/search/{id}")
     @ApiOperation(value = "search a organizer", response = Organizer::class)
-    fun searchOrganizerById(@RequestParam(name = "organizerId") organizerId: Long): ResponseEntity<*>? {
+    fun findOrganizerById(@RequestParam(name = "organizerId") organizerId: Long): ResponseEntity<*>? {
         return try {
-            val organizer = organizerService.searchOrganizerById(organizerId)
+            val organizer = organizerService.findOrganizerById(organizerId)
             if (organizer.isPresent) {
-                ResponseEntity(organizerService.searchOrganizerById(organizerId), HttpStatus.OK)
+                ResponseEntity(organizerService.findOrganizerById(organizerId), HttpStatus.OK)
             } else {
                 noPostFoundResponseID(organizerId)
             }

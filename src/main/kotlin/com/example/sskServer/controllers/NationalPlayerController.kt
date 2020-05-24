@@ -18,9 +18,9 @@ class NationalPlayerController {
 
     @PostMapping("/nationalPlayer/add")
     @ApiOperation(value = "add a new nationalPlayer", response = NationalPlayer::class)
-    fun addNationalPlayer(@RequestBody nationalPlayer: NationalPlayer): ResponseEntity<*>? {
+    fun saveNationalPlayer(@RequestBody nationalPlayer: NationalPlayer): ResponseEntity<*>? {
         return try {
-            ResponseEntity(nationalPlayerService.addNationalPlayer(nationalPlayer), HttpStatus.CREATED)
+            ResponseEntity(nationalPlayerService.saveNationalPlayer(nationalPlayer), HttpStatus.CREATED)
         } catch (e: IllegalArgumentException) {
             handleError(e)
         }
@@ -48,11 +48,11 @@ class NationalPlayerController {
 
     @PostMapping("/nationalPlayer/search/{id}")
     @ApiOperation(value = "search a nationalPlayer", response = NationalPlayer::class)
-    fun searchNationalPlayerById(@RequestParam(name = "nationalPlayerId") nationalPlayerId: Long): ResponseEntity<*>? {
+    fun findNationalPlayerById(@RequestParam(name = "nationalPlayerId") nationalPlayerId: Long): ResponseEntity<*>? {
         return try {
-            val nationalPlayer = nationalPlayerService.searchNationalPlayerById(nationalPlayerId)
+            val nationalPlayer = nationalPlayerService.findNationalPlayerById(nationalPlayerId)
             if (nationalPlayer.isPresent) {
-                ResponseEntity(nationalPlayerService.searchNationalPlayerById(nationalPlayerId), HttpStatus.OK)
+                ResponseEntity(nationalPlayerService.findNationalPlayerById(nationalPlayerId), HttpStatus.OK)
             } else {
                 noPostFoundResponseID(nationalPlayerId)
             }

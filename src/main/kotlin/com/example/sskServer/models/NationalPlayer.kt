@@ -29,5 +29,8 @@ class NationalPlayer(
         val nationalPlayerLink: Long,
         @Column(name = "achievements")
         @ApiModelProperty(position = 6)
-        val nationalPlayerAchievement: String
+        val nationalPlayerAchievement: String,
+        @Column(name = "institute")
+        @ApiModelProperty(position = 7)
+        val nationalPlayerInstitute: String
 )

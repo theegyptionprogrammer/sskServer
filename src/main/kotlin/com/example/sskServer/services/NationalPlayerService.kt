@@ -4,8 +4,10 @@ import com.example.sskServer.models.NationalPlayer
 import java.util.*
 
 interface NationalPlayerService {
-    fun addNationalPlayer(nationalPlayer: NationalPlayer): NationalPlayer
+    fun saveNationalPlayer(nationalPlayer: NationalPlayer): NationalPlayer
     fun getAllNationalPlayers(): MutableIterable<NationalPlayer>
+    fun findNationalPlayerById(id: Long): Optional<NationalPlayer>
+    fun findNationalPlayerByName(name: String): Optional<NationalPlayer>
     fun deleteNationalPlayer(nationalPlayer: NationalPlayer)
-    fun searchNationalPlayerById(id: Long): Optional<NationalPlayer>
 }
+

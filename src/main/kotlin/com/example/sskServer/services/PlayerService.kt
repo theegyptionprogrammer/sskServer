@@ -5,11 +5,10 @@ import java.util.*
 
 
 interface PlayerService {
-    fun addPlayer(player: Player): Player
-    fun addPlayers(listPlayers: List<Player>): MutableIterable<Player>
-    fun deletePlayer(player: Player)
-    fun updatePlayer(player: Player): Player
+    fun savePlayer(player: Player): Player
+    fun savePlayers(listPlayers: List<Player>): MutableIterable<Player>
     fun getAllPlayers(): MutableIterable<Player>
-    fun searchPlayerById(id: Long): Optional<Player>
-    // fun getPlayerByName(name: String):Optional<Iterator<List<Player>>>
+    fun findPlayerById(id: Long): Optional<Player>
+    fun findPlayerByName(name: String): Optional<Player>
+    fun deletePlayer(player: Player)
 }

@@ -13,27 +13,28 @@ import java.util.*
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/player")
 class PlayerController {
 
     @Autowired
     lateinit var playerService: PlayerService
 
-    @GetMapping("/players/get")
+    @GetMapping("/get")
     @ApiOperation(value = "View a list of all players", response = Player::class, responseContainer = "List")
     fun getAllPlayers(): Iterable<Player> = playerService.getAllPlayers()
 
 
-    @PostMapping("/player/save")
+    @PostMapping("/Save")
     @ApiOperation(value = "add a new player", response = Player::class)
-    fun addPlayer(@RequestBody player: Player): ResponseEntity<*>? {
+    fun savePlayer(@RequestBody player: Player): ResponseEntity<*>? {
         return try {
-            ResponseEntity(playerService.addPlayer(player), HttpStatus.CREATED)
+            ResponseEntity(playerService.savePlayer(player), HttpStatus.CREATED)
         } catch (e: IllegalArgumentException) {
             return handleError(e)
         }
     }
 
-    @PostMapping("/player/delete")
+    @PostMapping("/delete")
     @ApiOperation(value = "delete a new player", response = Player::class)
     fun deletePlayer(@RequestBody player: Player): ResponseEntity<*>? {
         return try {
@@ -43,13 +44,13 @@ class PlayerController {
         }
     }
 
-    @PostMapping("/player/search/{id}")
-    @ApiOperation(value = "search a player", response = Player::class)
-    fun searchPlayer(@RequestParam(name = "playerId") playerId: Long): ResponseEntity<*>? {
+    @RequestMapping("/{id}", method = [RequestMethod.GET])
+    @ApiOperation(value = "search a player by id", response = Player::class)
+    fun findById(@RequestParam(name = "playerId") playerId: Long): ResponseEntity<*>? {
         return try {
-            val player: Optional<Player> = playerService.searchPlayerById(playerId)
+            val player: Optional<Player> = playerService.findPlayerById(playerId)
             if (player.isPresent) {
-                ResponseEntity(playerService.searchPlayerById(playerId), HttpStatus.OK)
+                ResponseEntity(player.get(), HttpStatus.OK)
             } else {
                 noPlayerFoundResponseID(playerId)
             }
@@ -58,54 +59,31 @@ class PlayerController {
         }
     }
 
-    @GetMapping("/players/save")
-    fun savePlayers(): String {
-        val player1: Player = Player(1, "kiro", "center", "nice", 12314123)
-        val player2: Player = Player(2, "sasha", "center", "nice", 5251352)
-        val player3: Player = Player(3, "koctya", "center", "nice", 2351235)
-        val listPlayers: List<Player> = listOf(player1, player2, player3)
-        playerService.addPlayers(listPlayers)
-        return "players have been added"
-    }
-/*
-
-    @GetMapping("/players/search/{name}")
+    @RequestMapping("/{name}", method = [RequestMethod.GET])
     @ApiOperation(value = "search a player by name", response = Player::class)
-    fun searchPlayerByName(@PathVariable(value = "playerName") playerName: String): ResponseEntity<*>?{
+    fun findByName(@RequestParam(name = "playerName") playerName: String): ResponseEntity<*>? {
         return try {
-            val player: Optional<Iterator<List<Player>>> = playerService.getPlayerByName(playerName)
-            if (player.isPresent){
-                ResponseEntity(playerService.getPlayerByName(playerName), HttpStatus.OK)
+            val player: Optional<Player> = playerService.findPlayerByName(playerName)
+            if (player.isPresent) {
+                ResponseEntity(player.get(), HttpStatus.OK)
             } else {
                 noPlayerFoundResponseName(playerName)
             }
-        } catch (e: IllegalArgumentException){
-            handleError(e)
-        }
-    }
-*/
-
-
-    /*
-
-    @PutMapping("/update/player/{id}")
-    @ApiOperation(value = "update player info", response = Player::class)
-    fun updateTask(@PathVariable(value = "id") playerId: Long): ResponseEntity<*>? {
-        return try{
-            val getPlayer: Optional<Player> = playerService.getPlayerById(playerId)
-            if (getPlayer.isPresent){
-                playerService.updatePlayer(getPlayer.get())
-                ResponseEntity(String.format("Player with id: %d was updated", playerId), HttpStatus.OK )
-            } else {
-                return noPlayerFoundResponse(playerId)
-            }
-        } catch (e: Exception){
-            return errorResponse()
+        } catch (e: IllegalArgumentException) {
+            return handleError(e)
         }
     }
 
+    @PostMapping("/save")
+    fun savePlayers(): String {
+        playerService.savePlayer(Player(3, "koctya", "center", "nice", 2351235, "mgu"))
+        playerService.savePlayer(Player(4, "kiro", "center", "nice", 2351235, "mirea"))
+        playerService.savePlayer(Player(2, "danial", "center", "nice", 2351235, "mo"))
+        playerService.savePlayer(Player(1, "shady", "center", "nice", 2351235, "asdf"))
 
-*/
+        return "Customer are created"
+    }
+
     /* handling errors */
     @ExceptionHandler(IllegalArgumentException::class)
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)

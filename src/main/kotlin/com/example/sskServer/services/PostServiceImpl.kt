@@ -16,12 +16,12 @@ class PostServiceImpl : PostService {
     lateinit var postRepository: PostRepository
 
     @Transactional
-    override fun addPost(post: Post): Post {
+    override fun savePost(post: Post): Post {
         return postRepository.save(post)
     }
 
     @Transactional
-    override fun addListPosts(postList: List<Post>): MutableIterable<Post> {
+    override fun saveListPosts(postList: List<Post>): MutableIterable<Post> {
         return postRepository.saveAll(postList)
     }
 
@@ -31,17 +31,20 @@ class PostServiceImpl : PostService {
     }
 
     @Transactional
-    override fun searchPostById(id: Long): Optional<Post> {
+    override fun findPostById(id: String): Optional<Post> {
         return postRepository.findById(id)
+    }
+
+    override fun findPostByText(text: String): Optional<Post> {
+        return postRepository.findPostByText(text)
+    }
+
+    override fun findPostByTimePublishing(timePublishing: Long): Optional<Post> {
+        return postRepository.findPostByTimePublishing(timePublishing)
     }
 
     @Transactional
     override fun deletePost(post: Post) {
         return postRepository.delete(post)
-    }
-
-    @Transactional
-    override fun updatePost(post: Post): Post {
-        return postRepository.save(post)
     }
 }

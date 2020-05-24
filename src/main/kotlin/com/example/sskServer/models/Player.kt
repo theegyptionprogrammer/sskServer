@@ -8,22 +8,25 @@ import javax.persistence.*
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name = "Player")
+@Table(name = "player")
 data class Player(
         @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-        @Column(name = "ID")
+        @Column(name = "id")
         @ApiModelProperty(position = 1)
         val playerId: Int,
-        @Column(name = "name")
+        @Column(name = "playerName")
         @ApiModelProperty(position = 2)
         val playerName: String,
         @Column(name = "position")
         @ApiModelProperty(position = 3)
         val playerPosition: String,
-        @Column(name = "profile picture")
+        @Column(name = "profilePicture")
         @ApiModelProperty(position = 4)
         val playerPP: String,
         @Column(name = "contact")
         @ApiModelProperty(position = 6)
-        val playerContact: Long
+        val playerContact: Long,
+        @Column(name = "institute")
+        @ApiModelProperty(position = 7)
+        val playerInstitute: String
 )

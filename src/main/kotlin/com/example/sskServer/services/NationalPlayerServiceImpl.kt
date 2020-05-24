@@ -16,7 +16,7 @@ class NationalPlayerServiceImpl : NationalPlayerService {
     lateinit var nationalPlayerRepository: NationalPlayerRepository
 
     @Transactional
-    override fun addNationalPlayer(nationalPlayer: NationalPlayer): NationalPlayer {
+    override fun saveNationalPlayer(nationalPlayer: NationalPlayer): NationalPlayer {
         return nationalPlayerRepository.save(nationalPlayer)
     }
 
@@ -31,7 +31,12 @@ class NationalPlayerServiceImpl : NationalPlayerService {
     }
 
     @Transactional
-    override fun searchNationalPlayerById(id: Long): Optional<NationalPlayer> {
+    override fun findNationalPlayerById(id: Long): Optional<NationalPlayer> {
         return nationalPlayerRepository.findById(id)
+    }
+
+    @Transactional
+    override fun findNationalPlayerByName(name: String): Optional<NationalPlayer> {
+        return nationalPlayerRepository.findNationalPlayerByName(name)
     }
 }

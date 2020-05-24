@@ -16,7 +16,7 @@ class OrganizerServiceImpl : OrganizerService {
     lateinit var organizerRepository: OrganizerRepository
 
     @Transactional
-    override fun addOrganizer(organizer: Organizer): Organizer {
+    override fun saveOrganizer(organizer: Organizer): Organizer {
         return organizerRepository.save(organizer)
     }
 
@@ -31,14 +31,16 @@ class OrganizerServiceImpl : OrganizerService {
     }
 
     @Transactional
-    override fun searchOrganizerById(id: Long): Optional<Organizer> {
+    override fun findOrganizerById(id: Long): Optional<Organizer> {
         return organizerRepository.findById(id)
     }
 
     @Transactional
-    override fun updateOrganizer(organizer: Organizer): Organizer {
-        return organizerRepository.save(organizer)
+    override fun findOrganizerByInstitute(institute: String): Optional<Organizer> {
+        return organizerRepository.findOrganizerByInstitute(institute)
     }
 
-
+    override fun findOrganizerByName(name: String): Optional<Organizer> {
+        return organizerRepository.findOrganizerByName(name)
+    }
 }
